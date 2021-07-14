@@ -33,9 +33,9 @@ let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭�
 let cookiesArr = [], cookie = '', message;
 let helpAuthor = true;
 const randomCount = $.isNode() ? 20 : 5;
-let cashinviteCode = '';
-let cashinviteCode2 = '';
-let cashinviteCode3 = '';
+let cashinviteCode = 'ZE9qOoTIH4ZOsha1lzk';
+let cashinviteCode2 = 'eU9YK7voA4BhtxySiChQ';
+let cashinviteCode3 = '9oKgtH0hZ_Uv8A';
 let cashinviteCode4 = '';
 let cashinviteCode5 = '';
 let cashinviteCode6 = '';
@@ -90,7 +90,7 @@ let allMessage = '';
     return;
   }
   //await requireConfig()
-console.log(`您提供了${newShareCodes.length}个账号的${$.name}助力码\n`);  
+//console.log(`您提供了${newShareCodes.length}个账号的${$.name}助力码\n`);  
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
