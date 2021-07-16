@@ -1,26 +1,13 @@
-/*
-燃动夏季
-活动地址: 京东-点我赢千元  https://wbbny.m.jd.com/babelDiy/Zeus/2rtpffK8wqNyPBH6wyUDuBKoAbCt/index.html
-活动时间：7.8-8.8
-更新时间：2021-07-5 12:00
-脚本兼容: QuantumultX, Surge,Loon, JSBox, Node.js
-
-=================================Quantumultx=========================
-[task_local]
-#燃动夏季
-41 0,6-23/3 * * * https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_summer_movement.js, tag=燃动夏季, img-url=https://raw.githubusercontent.com/Orz-3/mini/master/Color/jd.png, enabled=true
-=================================Loon===================================
-[Script]
-cron "41 0,6-23/3 * * *" script-path=https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_summer_movement.js,tag=燃动夏季
-===================================Surge================================
-燃动夏季 = type=cron,cronexp="41 0,6-23/3 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_summer_movement.js
-====================================小火箭=============================
-燃动夏季 = type=cron,script-path=https://raw.githubusercontent.com/jiulan/platypus/main/scripts/jd_summer_movement.js, cronexpr="41 0,6-23/3 * * *", timeout=3600, enable=true
- */
+/**
+ *  燃动夏季
+ *  25 0,6-23/2 * * *
+ *  脚本会助力作者百元守卫战 参数helpAuthorFlag 默认不助力
+ *  百元守卫战,先脚本内互助，多的助力会助力作者
+ * */
 const $ = new Env('燃动夏季');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
-const helpAuthorFlag = true;//是否助力作者SH  true 助力，false 不助力
+const helpAuthorFlag = false;//是否助力作者SH  true 助力，false 不助力
 const https = require('https');
 const fs = require('fs/promises');
 const { R_OK } = require('fs').constants;
@@ -32,8 +19,9 @@ const REG_ENTRY = /(__webpack_require__\(__webpack_require__.s=)(\d+)(?=\)})/;
 const needModuleId = 356
 const DATA = {appid:'50085',sceneid:'OY217hPageh5'};
 let smashUtils;
+const UA =  `jdpingou;iPhone;10.0.6;${Math.ceil(Math.random()*2+12)}.${Math.ceil(Math.random()*4)};${randomString(40)};`;
 class MovementFaker {
-  constructor(cookie) {this.cookie = cookie;this.ua = require('./USER_AGENTS.js').USER_AGENT;}
+  constructor(cookie) {this.cookie = cookie;this.ua = UA;}
   async run() {if (!smashUtils) {await this.init();}
     var t = Math.floor(1e7 + 9e7 * Math.random()).toString();
     var e = smashUtils.get_risk_result({id: t,data: {random: t}}).log;
@@ -77,6 +65,7 @@ class MovementFaker {
 }
 
 $.inviteList = [];
+$.byInviteList = [];
 let uuid = 8888;
 let cookiesArr = [];
 if ($.isNode()) {
@@ -90,14 +79,26 @@ if ($.isNode()) {
     $.getdata("CookieJD2"),
     ...$.toObj($.getdata("CookiesJD") || "[]").map((item) => item.cookie)].filter((item) => !!item);
 }
+
 !(async () => {
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
-  nods(process.cwd());
+  console.log(`活动火爆种`);
+  return;
+
+  console.log(`注意：若执行失败，则请进入环境手动删除“app.5c2472d1.js”文件，然后重新执行脚本`);
+  console.log(`若找不到“app.5c2472d1.js”文件，则删除“app”开头的解密文件`);
+  // try{
+  //   nods(process.cwd());
+  // }catch (e) {
+  //
+  // }
+  let hotInfo = {};
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
+      $.hotFlag = false;
       $.cookie = cookiesArr[i];
       uuid = getUUID();
       $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
@@ -120,13 +121,42 @@ if ($.isNode()) {
         console.log(JSON.stringify(e));
         console.log(JSON.stringify(e.message));
       }
+      hotInfo[$.UserName] = $.hotFlag;
+    }
+  }
+
+  let res = [],res2 = [];
+  if(helpAuthorFlag){
+    try{
+      //res = await getAuthorShareCode('http://cdn.trueorfalse.top/392b03aabdb848d0b7e5ae499ef24e35/');
+    }catch (e) {}
+    if(!res){res = [];}
+  }
+  let allCodeList = getRandomArrayElements([ ...res, ...res2],[ ...res, ...res2].length);
+  allCodeList=[...$.byInviteList,...allCodeList];
+  if(allCodeList.length >0){
+    console.log(`\n******开始助力百元守卫战*********\n`);
+    for (let i = 0; i < cookiesArr.length; i++) {
+      $.cookie = cookiesArr[i];
+      uuid = getUUID();
+      $.canHelp = true;
+      $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+      if(hotInfo[$.UserName]){continue;}
+      for (let i = 0; i < allCodeList.length && $.canHelp; i++) {
+        $.inviteId = allCodeList[i];
+        console.log(`${$.UserName} 去助力 ${$.inviteId}`);
+        await takePostRequest('byHelp');
+        await $.wait(1000);
+      }
     }
   }
   if ($.inviteList.length > 0) console.log(`\n******开始内部京东账号【邀请好友助力】*********\n`);
   for (let i = 0; i < cookiesArr.length; i++) {
     $.cookie = cookiesArr[i];
+    uuid = getUUID();
     $.canHelp = true;
     $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
+    if(hotInfo[$.UserName]){continue;}
     $.index = i + 1;
     for (let j = 0; j < $.inviteList.length && $.canHelp; j++) {
       $.oneInviteInfo = $.inviteList[j];
@@ -139,31 +169,19 @@ if ($.isNode()) {
       await $.wait(2000);
     }
   }
-  if(helpAuthorFlag){
-    let res = [];
-    try{
-      res = await getAuthorShareCode('https://ghproxy.com/https://raw.githubusercontent.com/jiulan/platypus/main/json/summer_movement.json');
-    }catch (e) {}
-    if(!res){res = [];}
-    let allCodeList = getRandomArrayElements([ ...res],[ ...res].length);
-    if(allCodeList.length >0){
-      console.log(`\n******开始助力作者百元守卫战*********\n`);
-      for (let i = 0; i < cookiesArr.length; i++) {
-        $.cookie = cookiesArr[i];
-        $.canHelp = true;
-        $.UserName = decodeURIComponent($.cookie.match(/pt_pin=([^; ]+)(?=;?)/) && $.cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1]);
-        for (let i = 0; i < allCodeList.length && $.canHelp; i++) {
-          $.inviteId = allCodeList[i];
-          console.log(`${$.UserName} 去助力 ${$.inviteId}`);
-          await takePostRequest('byHelp');
-          await $.wait(1000);
-        }
-      }
-    }
-  }
-  nods(process.cwd());
-})().catch((e) => {$.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')}).finally(() => {$.done();})
+  try{
+    nods(process.cwd());
+  }catch (e) {
 
+  }
+})().catch((e) => {$.log('', `❌ ${$.name}, 失败! 原因: ${e}!`, '')}).finally(() => {$.done();})
+function randomString(e) {
+  e = e || 32;
+  let t = "abcdefhijkmnprstwxyz2345678", a = t.length, n = "";
+  for (i = 0; i < e; i++)
+    n += t.charAt(Math.floor(Math.random() * a));
+  return n
+}
 
 async function main(){
   $.homeData = {};
@@ -172,21 +190,27 @@ async function main(){
   $.userInfo =$.homeData.result.userActBaseInfo
   console.log(`\n待兑换金额：${Number($.userInfo.poolMoney)} 当前等级:${$.userInfo.medalLevel} \n`);
   await $.wait(1000);
-  if($.userInfo &&  $.userInfo.sex !== 1 && $.userInfo.sex !== 2){
+  if($.userInfo &&  $.userInfo.sex !== 1 && $.userInfo.sex !== 0){
     await takePostRequest('olympicgames_tiroGuide');
     await $.wait(1000);
   }
+  console.log('获取百元守卫战信息');
+  $.guradHome = {};
+  await takePostRequest('olypicgames_guradHome');
+  await $.wait(2000);
   if (Number($.userInfo.poolCurrency) >= Number($.userInfo.exchangeThreshold)) {
     console.log(`满足升级条件，去升级`);
     await $.wait(1000);
     await takePostRequest('olympicgames_receiveCash');
   }
+  if($.hotFlag){return ;}
   if($.homeData.result.trainingInfo.state === 0 && !$.homeData.result.trainingInfo.finishFlag){
     console.log(`开始运动`)
     await takePostRequest('olympicgames_startTraining');
   }else if($.homeData.result.trainingInfo.state === 0 && $.homeData.result.trainingInfo.finishFlag){
     console.log(`已完成今日运动`)
   }
+  if($.hotFlag){return ;}
   bubbleInfos = $.homeData.result.bubbleInfos;
   let runFlag = false;
   for(let item of bubbleInfos){
@@ -197,6 +221,7 @@ async function main(){
       runFlag = true;
     }
   }
+  if($.hotFlag){return ;}
   if(runFlag) {
     await takePostRequest('olympicgames_home');
     $.userInfo =$.homeData.result.userActBaseInfo;
@@ -206,30 +231,30 @@ async function main(){
     await $.wait(1000);
     await takePostRequest('olympicgames_receiveCash');
   }
+  if($.hotFlag){return ;}
   await $.wait(1000);
   await takePostRequest('olympicgames_getTaskDetail');
   await $.wait(1000);
   console.log(`开始做任务`)
   await doTask();
+  if($.hotFlag){return ;}
   await $.wait(1000);
   console.log(`开始做微信端任务`)
   await takePostRequest('wxTaskDetail');
   await $.wait(1000)
   await doTask();
-  console.log('获取百元守卫战信息')
-  $.guradHome = {};
-  await takePostRequest('olypicgames_guradHome');
+
 }
 
 async function getBody($) {const zf = new MovementFaker($.cookie);const ss = await zf.run();return ss;}
 
 async function doTask(){
   //做任务
-  for (let i = 0; i < $.taskList.length; i++) {
+  for (let i = 0; i < $.taskList.length && !$.hotFlag; i++) {
     $.oneTask = $.taskList[i];
     if ([1, 3, 5, 7, 9, 26].includes($.oneTask.taskType) && $.oneTask.status === 1) {
       $.activityInfoList = $.oneTask.shoppingActivityVos || $.oneTask.brandMemberVos || $.oneTask.followShopVo || $.oneTask.browseShopVo;
-      for (let j = 0; j < $.activityInfoList.length; j++) {
+      for (let j = 0; j < $.activityInfoList.length && !$.hotFlag; j++) {
         $.oneActivityInfo = $.activityInfoList[j];
         if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
           continue;
@@ -270,7 +295,7 @@ async function doTask(){
       }
     }else if ($.oneTask.taskType === 2 && $.oneTask.status === 1 && $.oneTask.scoreRuleVos[0].scoreRuleType === 0){
       $.activityInfoList = $.oneTask.productInfoVos ;
-      for (let j = 0; j < $.activityInfoList.length; j++) {
+      for (let j = 0; j < $.activityInfoList.length && !$.hotFlag; j++) {
         $.oneActivityInfo = $.activityInfoList[j];
         if ($.oneActivityInfo.status !== 1 || !$.oneActivityInfo.taskToken) {
           continue;
@@ -381,6 +406,9 @@ async function dealReturn(type, data) {
     console.log(`返回异常：${data}`);
     return;
   }
+  if (data.code === 0 && data.data && data.data.bizCode && data.data.bizCode === -1002) {
+    $.hotFlag = true;
+  }
   switch (type) {
     case 'olympicgames_home':
       if (data.code === 0) {
@@ -455,10 +483,10 @@ async function dealReturn(type, data) {
           console.log(`助力成功`);
         }
       }else if(data.data && data.data.bizMsg){
-        if(data.data.bizCode === -405){
+        if(data.data.bizCode === -405 || data.data.bizCode === -411){
           $.canHelp = false;
         }
-        if(data.data.bizCode === -404){
+        if(data.data.bizCode === -404 && $.oneInviteInfo){
           $.oneInviteInfo.max = true;
         }
         console.log(data.data.bizMsg);
@@ -486,6 +514,13 @@ async function dealReturn(type, data) {
       if (data.data && data.data.result && data.data.bizCode === 0) {
         console.log(`百元守卫战互助码：${ data.data.result.inviteId || '助力已满，获取助力码失败'}`);
         $.guradHome = data.data;
+        if(data.data.result.inviteId && Number(data.data.result.activityLeftSeconds)> 0){
+          $.byInviteList.push(data.data.result.inviteId)
+        }else if(Number(data.data.result.activityLeftSeconds) === 0){
+          console.log(`百元守卫时间已结束`);
+        }
+      }else if (data.data && data.data.bizCode === 1103) {
+        console.log(`百元守卫时间已结束,已领取奖励`);
       }else {
         console.log(JSON.stringify(data));
       }
@@ -508,7 +543,8 @@ function callbackResult(info) {
         'Connection': `keep-alive`,
         'Accept': `*/*`,
         'Host': `api.m.jd.com`,
-        'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+        'User-Agent': UA,
+          //$.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
         'Accept-Encoding': `gzip, deflate, br`,
         'Accept-Language': `zh-cn`,
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -540,7 +576,8 @@ async function getPostRequest(body) {
     'Cookie': $.cookie,
     "Origin": "https://wbbny.m.jd.com",
     "Referer": "https://wbbny.m.jd.com/",
-    'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
+    'User-Agent': UA,
+    //'User-Agent': $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : (require('./USER_AGENTS').USER_AGENT)) : ($.getdata('JDUA') ? $.getdata('JDUA') : "jdapp;iPhone;9.4.4;14.3;network/4g;Mozilla/5.0 (iPhone; CPU iPhone OS 14_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148;supportJDSHWK/1"),
   };
   return { method: method, headers: headers, body: body};
 }
@@ -575,7 +612,7 @@ function getUUID() {
   uuid = uuid.replace(/[xy]/g, function (e) {
     var t = (n + 16 * Math.random()) % 16 | 0;
     return n = Math.floor(n / 16),
-        ("x" == e ? t : 3 & t | 8).toString(16)
+      ("x" == e ? t : 3 & t | 8).toString(16)
   }).replace(/-/g, "")
   return uuid
 }
@@ -704,7 +741,7 @@ function nods(dir) {
       console.log("给定的路径不存在，请给出正确的路径");
     }
   } catch (e) {
-    console.error(e)
+    console.log(e)
   }
 }
 // prettier-ignore
