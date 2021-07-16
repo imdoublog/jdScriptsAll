@@ -30,9 +30,10 @@ $.cookie = '';
 $.secretpInfo = {};
 $.ShInviteList = [];
 $.innerShInviteList = [
-  'H8mphLbwLgz3e4GeFdc0g9GS9KyvaS3S',
-  'H8mphLbwLn_LHtvAULB0thOUapqKwhU',
-  'H8mphLbwLnPnJ8L9XqdUv7O1wfsqrXQ'
+  'HcmphKvwHFzLBPrgf5dLtn5hr0jLXj5X2UI348d6icNRYQ81XO8sUbF7S9oLGrw-rOToo50vwvGqYqM',
+  'HcmphLbwLg2qeICfE9M714encQpRCgjzYLOnTYWdSo5QWn40Omhg2-FxLJ4qHC_QTMpt6Ke4zE-1b-DM77NZ1A',
+  'HcmphDk91tIy7YKTHtV_mjMtFwPYNVAn6Fq4LBDj3dH9igtvdPJ3sDhcxOxw64iEni8',
+  'HcmphLbwLg72eYqTFIYwhwT0bq2H6jLieN_2Ig4NVs8maoqnO4rUDAp9f4N8EdCw0UKbQn9jXds2pxSCjS-B4Q'
 ];
 if ($.isNode()) {
   Object.keys(jdCookieNode).forEach((item) => {
@@ -44,8 +45,8 @@ if ($.isNode()) {
 }
 
 $.appid = 'o2_act';
-const UA = $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "JD4iPhone/9.3.5 CFNetwork/1209 Darwin/20.2.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "JD4iPhone/9.3.5 CFNetwork/1209 Darwin/20.2.0")
-
+//const UA = $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT : "JD4iPhone/9.3.5 CFNetwork/1209 Darwin/20.2.0") : ($.getdata('JDUA') ? $.getdata('JDUA') : "JD4iPhone/9.3.5 CFNetwork/1209 Darwin/20.2.0")
+const UA =  `jdpingou;iPhone;10.0.6;${Math.ceil(Math.random()*2+12)}.${Math.ceil(Math.random()*4)};${randomString(40)};`;
 
 !(async () => {
   if (!cookiesArr[0]) {
@@ -57,7 +58,7 @@ const UA = $.isNode() ? (process.env.JD_USER_AGENT ? process.env.JD_USER_AGENT :
       '本脚本只助力SH\n' +
       '百元守卫战 开启时间早上8点过后\n' +
       '活动时间：2021-07-08至2021-08-08\n' +
-      '脚本更新时间：2021年7月9日 9点00分\n'
+      '脚本更新时间：2021年7月16日 21点00分\n'
       );
       if(Number(summer_movement_ShHelpFlag) === 1){
         console.log('您设置了 【百元守卫战SH】✅ || 互助✅')
