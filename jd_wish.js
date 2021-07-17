@@ -1,9 +1,7 @@
 /*
 入口 京东众筹 许愿池 
 
-jd_wish.js
-10 10 * * *
-
+10 10 * * * jd_wish.js
 
 */
 const $ = new Env('柠檬众筹许愿池');
