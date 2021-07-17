@@ -12,13 +12,13 @@
 
 ================Loon==============
 [Script]
-cron "20 13 * * 6" script-path=jd_get_share_code.js, tag=获取互助码
+cron "20 13 * * *" script-path=jd_get_share_code.js, tag=获取互助码
 
 ===============Surge=================
-获取互助码 = type=cron,cronexp="20 13 * * 6",wake-system=1,timeout=3600,script-path=jd_get_share_code.js
+获取互助码 = type=cron,cronexp="20 13 * * *",wake-system=1,timeout=3600,script-path=jd_get_share_code.js
 
 ============小火箭=========
-获取互助码 = type=cron,script-path=jd_get_share_code.js, cronexpr="20 13 * * 6", timeout=3600, enable=true
+获取互助码 = type=cron,script-path=jd_get_share_code.js, cronexpr="20 13 * * *", timeout=3600, enable=true
  */
 const $ = new Env("获取互助码");
 const JD_API_HOST = "https://api.m.jd.com/client.action";
