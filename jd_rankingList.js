@@ -1,8 +1,5 @@
-/*
+// 0 14 * * * 
 
-[task_local]
-0 14 * * * 
- */
 const $ = new Env('京东排行榜');
 main();
 async function main() {
