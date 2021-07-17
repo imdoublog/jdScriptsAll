@@ -7,7 +7,7 @@ TG通知群 https://t.me/ningmeng999
 
 
 
-cron "10 9 * * *" , tag=京东快递签到
+cron "10 9 * * *"
 
 
 
