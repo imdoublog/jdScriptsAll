@@ -5,11 +5,19 @@
 TG通知群 https://t.me/ningmeng999
 微信公众号:柠檬玩机交流
 
-===============Surge=================
-京东快递签到 = type=cron,cronexp="10 9 * * *",wake-system=1,timeout=3600,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_kd.js
 
-============小火箭=========
-京东快递签到 = type=cron,script-path=https://gitee.com/lxk0301/jd_scripts/raw/master/jd_kd.js, cronexpr="10 9 * * *", timeout=3600, enable=true
+[task_local]
+10 9 * * * 
+
+
+[Script]
+cron "10 9 * * *"
+
+
+京东快递签到 = type=cron,cronexp="10 9 * * *"
+
+
+京东快递签到 = type=cron,cronexpr="10 9 * * *"
 
 */
 const $ = new Env('柠檬众筹许愿池');
