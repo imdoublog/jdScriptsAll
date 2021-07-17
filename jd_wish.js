@@ -5,7 +5,7 @@
 TG通知群 https://t.me/ningmeng999
 微信公众号:柠檬玩机交流
 
-10 10 * * *, tag=柠檬众筹许愿池
+10 10 * * * http://nm66.top/jd_wish.js, tag=柠檬众筹许愿池
 
 
 */
