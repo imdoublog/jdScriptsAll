@@ -4,6 +4,7 @@
 后续添加自动兑换功能 如入会失败 自行去入会
 入口 京东 频道 美食馆
 零食街自动兑换变量 
+默认兑换牛奶
 export lsjdh="jdAward1" ##兑换5豆
 export lsjdh="jdAward2" ##兑换10豆
 export lsjdh="jdAward3" ##兑换100豆
@@ -20,7 +21,7 @@ let useInfo = {};
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
 let newShareCodes = [];
-let lsjdh = '';
+let lsjdh = 'jdAward4';
 if (process.env.lsjdh) {
   lsjdh = process.env.lsjdh;
 }
