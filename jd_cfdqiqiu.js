@@ -1,6 +1,6 @@
 
 
-//  35 * * * * 
+//  35 * * * * jd_cfdqiqiu.js
 
 const $ = new Env('柠檬财富岛收气球');
 const notify = $.isNode() ? require('./sendNotify') : '';
