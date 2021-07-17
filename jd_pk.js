@@ -1,7 +1,7 @@
 /*
 京享值PK
 [task_local]
-0 10,11 * * *
+0 10,11 * * * jd_pk.js
 
  */
 const $ = new Env('京享值PK');
