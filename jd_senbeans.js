@@ -1,7 +1,7 @@
 /*
 * 来客有礼小程序
 搬运不知名大佬的脚本
-* cron 45 4 * * *
+* cron 45 4 * * * jd_senbeans.js
 * */
 const $ = new Env('送豆得豆');
 const notify = $.isNode() ? require('./sendNotify') : '';
