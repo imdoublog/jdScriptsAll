@@ -3,7 +3,7 @@
 可以做随机互助
 活动入口：京东赚赚小程序
 长期活动，每日收益2毛左右，多号互助会较多
-10 5 * * *
+10 5 * * * jd_jdzz.js
 */
 const $ = new Env('京东赚赚');
 const notify = $.isNode() ? require('./sendNotify') : '';
