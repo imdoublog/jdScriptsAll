@@ -1,4 +1,4 @@
-// 0 14 * * * 
+// 0 14 * * * jd_rankingList.js
 
 const $ = new Env('京东排行榜');
 main();
