@@ -10,17 +10,7 @@
  ==========================Quantumultx=========================
  [task_local]
  #东东电竞经理
- 0 2-23/2 * * * jd_EsportsManager.js, tag=东东电竞经理, img-url=https://raw.githubusercontent.com/JDHelloWorld/jd_scripts/main/icon/jd_EsportsManager.png, enabled=true
- =========================Loon=============================
- [Script]
- cron "0 0-23/2 * * *" script-path=jd_EsportsManager.js,tag=东东电竞经理
-
- =========================Surge============================
- 东东电竞经理 = type=cron,cronexp="0 0-23/2 * * *",wake-system=1,timeout=3600,script-path=jd_EsportsManager.js
-
- =========================小火箭===========================
- 东东电竞经理 = type=cron,script-path=jd_EsportsManager.js, cronexpr="0 0-23/2 * * *", timeout=3600, enable=true
-
+ 0 2-21/2 * * * , tag=东东电竞经理
  按顺序给第(Math.floor((index - 1) / 6) + 1)个账号助力
  可能有BUG，但不会给别人号助力
 
