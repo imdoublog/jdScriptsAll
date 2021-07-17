@@ -5,6 +5,12 @@
 TG通知群 https://t.me/ningmeng999
 微信公众号:柠檬玩机交流
 
+============Quantumultx===============
+[task_local]
+#京东快递签到
+10 9 * * * https://gitee.com/lxk0301/jd_scripts/raw/master/jd_kd.js, tag=京东快递签到, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jd_kd.png, enabled=true
+
+================Loon==============
 [Script]
 cron "10 9 * * *"
 */
