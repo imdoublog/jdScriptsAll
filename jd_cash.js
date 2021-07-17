@@ -31,7 +31,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', message;
-let helpAuthor = true;
+let helpAuthor = false;
 const randomCount = $.isNode() ? 20 : 5;
 let cashinviteCode = 'ZE9qOoTIH4ZOsha1lzk';
 let cashinviteCode2 = 'eU9Ya-W0Zfki9mbUn3oQ0A';
