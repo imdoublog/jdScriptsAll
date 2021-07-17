@@ -4,7 +4,7 @@
 新手上路勿黑勿喷
 TG通知群 https://t.me/ningmeng999
 微信公众号:柠檬玩机交流
-cron "0 8,10 * * *"
+cron "0 9 * * *"
 */
 const $ = new Env('柠檬众筹许愿池');
 const notify = $.isNode() ? require("./sendNotify") : "";
