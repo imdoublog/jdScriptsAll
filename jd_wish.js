@@ -1,11 +1,7 @@
 /*
 入口 京东众筹 许愿池 
-====================
-新手上路勿黑勿喷
-TG通知群 https://t.me/ningmeng999
-微信公众号:柠檬玩机交流
 
-10 10 * * * http://nm66.top/jd_wish.js, tag=柠檬众筹许愿池
+10 10 * * * http://nm66.top/jd_wish.js,
 
 
 */
