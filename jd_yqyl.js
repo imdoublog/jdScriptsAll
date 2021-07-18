@@ -15,9 +15,7 @@ const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let cookiesArr = [], cookie = '', message;
 let yqm = 'p6B2W4nq81NUqO14pi15KQ';
 let zdtx = false //设置为true自动抢提现100
-// if (process.env.yqm) {
-//   yqm = process.env.yqm;
-// }
+
 if (process.env.zdtx) {
   zdtx = process.env.zdtx;
 }
